@@ -47,9 +47,10 @@ def command_line_interface():
     parser.add_argument('-p', '--preexisting', action='store_true',
                         help=overwrite_help)
 
+    # - Note:changed verbiage to cover more possible file format versioning. '-v2' -> '-v#'
     reg_help = ('This flag indicates the program should convert to XForm and '
                 'not try to make PMA2020-specific edits. To simply convert to '
-                'XML and nothing more, use this flag without the -v2 flag.')
+                'XML and nothing more, use this flag without a -v# flag.')
     parser.add_argument('-r', '--regular', action='store_true', help=reg_help)
 
     noval_help = 'Do not validate XML output with ODK Validate.'
@@ -60,9 +61,15 @@ def command_line_interface():
                    'hyphen ("-").')
     parser.add_argument('-s', '--suffix', help=suffix_help)
 
-    v2_help = ('Enforce the new style of form conversion where all '
-               'directives are stored in the XLSForms.')
-    parser.add_argument('-v2', '--version2', action='store_true', help=v2_help)
+
+    v1_help = ('Enforce the new PMA2020 style of form conversion where all '
+               'directives are stored in the XLSForms. V1 is the first iteration of this format.')
+    parser.add_argument('-v1', '--version1', action='store_true', help=v1_help)
+    # - Backup:
+    # v2_help = ('Enforce the new style of form conversion where all '
+    #            'directives are stored in the XLSForms.')
+    # parser.add_argument('-v2', '--version2', action='store_true', help=v2_help)
+
 
     ignore_version_help = ('Ignore versioning in filename, form_id, '
                            'form_title, and save_form. In other words, the '
@@ -88,15 +95,24 @@ def command_line_interface():
     else:
         suffix = unicode(args.suffix)
     check_versioning = not args.ignore_version
+
+
     pma = not args.regular
+
     strict_linking = not args.linking_warn
     validate = not args.novalidate
 
     kwargs = {
         constants.SUFFIX: suffix,
         constants.PREEXISTING: args.preexisting,
+
+        #- Refactoring: Consider changing pma (& PMA) to File_Format_PMA
         constants.PMA: pma,
-        constants.V2: args.version2,
+
+        # - Refactoring: Consider changing v2 to File_Format_V2/V1 or File_Format_PMAv2
+        # - Backup: constants.V2: args.version2,
+        constants.V1: args.version1,
+
         constants.CHECK_VERSIONING: check_versioning,
         constants.STRICT_LINKING: strict_linking,
         constants.VALIDATE: validate,

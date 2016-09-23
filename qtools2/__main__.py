@@ -33,14 +33,24 @@ alive_help = ('Include this flag to keep the program alive after conversion. '
               'This is helpful for running in Windows.')
 parser.add_argument('-a', '--alive', action='store_true', help=alive_help)
 
+# - Note: changed verbiage to cover more possible file format versioning. '-v2' -> '-v#'
 reg_help = ('This flag indicates the program should convert to XForm and '
-            'not try to make PMA2020-specific edits.')
+            'not try to make PMA2020-specific edits. To simply convert to '
+            'XML and nothing more, use this flag without a -v# flag.')
+# - Backup:
+# reg_help = ('This flag indicates the program should convert to XForm and '
+#             'not try to make PMA2020-specific edits.')
 parser.add_argument('-r', '--regular', action='store_true', help=reg_help)
 
-v2_help = ('Enforce the new style of PMA2020 form conversion where all '
-              'directives are stored in the XLSForms.')
-parser.add_argument('-v', '--v2', action='store_true', help=v2_help)
+v1_help = ('Enforce the new PMA2020 style of form conversion where all '
+           'directives are stored in the XLSForms. V1 is the first iteration of this format.')
+parser.add_argument('-v1', '--version1', action='store_true', help=v1_help)
+# - Backup:
+# v2_help = ('Enforce the new style of PMA2020 form conversion where all '
+#               'directives are stored in the XLSForms.')
+# parser.add_argument('-v', '--v2', action='store_true', help=v2_help)
 
 args = parser.parse_args()
 
-qgui.start_gui(keep_alive=args.alive, regular=args.regular, v2=args.v2)
+qgui.start_gui(keep_alive=args.alive, regular=args.regular, v1=args.v1)
+# - Backup: qgui.start_gui(keep_alive=args.alive, regular=args.regular, v2=args.v2)

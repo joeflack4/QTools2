@@ -44,7 +44,8 @@ from Tkinter import Tk
 from tkFileDialog import askopenfilenames
 
 
-def start_gui(keep_alive=True, regular=False, v2=False):
+def start_gui(keep_alive=True, regular=False, v1=False):
+# - Backup: def start_gui(keep_alive=True, regular=False, v2=False):
     print 'Please select source MS-Excel files for conversion.'
     Tk().withdraw()
     filenames = askopenfilenames(initialdir=os.getcwd())
@@ -56,8 +57,10 @@ def start_gui(keep_alive=True, regular=False, v2=False):
         filenames = [unicode(f) for f in filenames]
         kwargs = {
             constants.PMA: not regular,
-            constants.V2: v2
+            constants.V1: v1
+            # - Backup: constants.V2: v2
         }
+
         convert.xlsform_convert(filenames, **kwargs)
     except (TypeError, NameError):
         print 'No files picked.'

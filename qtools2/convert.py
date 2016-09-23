@@ -71,7 +71,9 @@ def xlsform_convert(xlsxfiles, **kwargs):
     suffix = kwargs.get(constants.SUFFIX, u'')
     preexisting = kwargs.get(constants.PREEXISTING, False)
     pma = kwargs.get(constants.PMA, True)
-    v2 = kwargs.get(constants.V2, False)
+
+    # Backup: v2 = kwargs.get(constants.V2, True)
+    v1 = kwargs.get(constants.V1, True)
     check_versioning = kwargs.get(constants.CHECK_VERSIONING, True)
     strict_linking = kwargs.get(constants.STRICT_LINKING, True)
     validate = kwargs.get(constants.VALIDATE, True)
@@ -113,9 +115,13 @@ def xlsform_convert(xlsxfiles, **kwargs):
     successes = [xlsform_offline(xlsform, validate) for xlsform in xlsforms]
     report_conversion_success(successes, xlsforms)
     all_wins = all(successes)
-    if all_wins and v2:
+    if all_wins and v1:
         xform_edit_and_check(xlsforms, strict_linking)
-    elif all_wins and not v2 and pma:
+    elif all_wins and not v1 and pma:
+    # - Backup:
+    # if all_wins and v2:
+    #     xform_edit_and_check(xlsforms, strict_linking)
+    # elif all_wins and not v2 and pma:
         qxmledit.edit_all_checkers(xlsforms=xlsforms)
     elif not all_wins:
         m = (u'*** Removing all generated files because not all conversions '
