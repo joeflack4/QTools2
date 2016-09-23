@@ -55,6 +55,8 @@ placeholders = naming_schemes.str_to_delete
 SUFFIX = u'suffix'
 PREEXISTING = u'preexisting'
 PMA = u'pma'
+# - Note: Added 'regular'. - Joe 09/23/2016
+REGULAR = u'regular'
 V1 = u'v2'
 CHECK_VERSIONING = u'check_versioning'
 STRICT_LINKING = u'strict_linking'

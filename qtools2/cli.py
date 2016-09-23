@@ -96,7 +96,6 @@ def command_line_interface():
         suffix = unicode(args.suffix)
     check_versioning = not args.ignore_version
 
-
     pma = not args.regular
 
     strict_linking = not args.linking_warn
@@ -106,8 +105,10 @@ def command_line_interface():
         constants.SUFFIX: suffix,
         constants.PREEXISTING: args.preexisting,
 
-        #- Refactoring: Consider changing pma (& PMA) to File_Format_PMA
+        # - Refactoring: Consider changing pma (& PMA) to File_Format_PMA
         constants.PMA: pma,
+        # - Note: Added following line.
+        constants.REGULAR: args.regular,
 
         # - Refactoring: Consider changing v2 to File_Format_V2/V1 or File_Format_PMAv2
         # - Backup: constants.V2: args.version2,

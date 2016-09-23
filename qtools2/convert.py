@@ -66,18 +66,27 @@ from errors import XlsformError
 from errors import XformError
 from errors import ConvertError
 
+# - Note: Following line/file was added.
+from config import qtools2_config as config
 
 def xlsform_convert(xlsxfiles, **kwargs):
     suffix = kwargs.get(constants.SUFFIX, u'')
     preexisting = kwargs.get(constants.PREEXISTING, False)
     pma = kwargs.get(constants.PMA, True)
-
+    regular = kwargs.get(constants.REGULAR, True)
     # Backup: v2 = kwargs.get(constants.V2, True)
     v1 = kwargs.get(constants.V1, True)
     check_versioning = kwargs.get(constants.CHECK_VERSIONING, True)
     strict_linking = kwargs.get(constants.STRICT_LINKING, True)
     validate = kwargs.get(constants.VALIDATE, True)
     debug = kwargs.get(constants.DEBUG, False)
+
+    # - Note: Following logic was added. Also, I know there's probably a better way to do config and default format.
+    if config['default_format'] == 'v1' and not regular:
+        v1 = True
+    else:
+        v1 = False
+
 
     xlsforms = []
     error = []
