@@ -271,6 +271,10 @@ class Xlsform:
         except (xlrd.XLRDError, ValueError):
             # sheet not found, type not found
             pass
+        except AttributeError:
+            err = 'Invalid question type \'{}\' found in row {}.'\
+                .format(item, i)
+            raise AttributeError(err)
 
         if choice_lists:
             d[u'choices'] = choice_lists
